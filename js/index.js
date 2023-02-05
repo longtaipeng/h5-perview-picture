@@ -106,10 +106,10 @@ window.onload = function() {
 
         $(".perview_item").on("touchend", (e) => {
             e.preventDefault();
-            // clearInterval(perview_move_time);
             endX = e.changedTouches[0].pageX;
             endY = e.changedTouches[0].pageY;
             endT = new Date();
+            // 模拟点击事件
             if (Math.abs(endX - startX) < 5 && Math.abs(endY - startY) < 5) {
                 $(".preview").css("display", "none");
                 isMoved = false;
