@@ -60,9 +60,8 @@ window.onload = function() {
         })
         $(".perview_item").on("touchstart", (e) => {
             e.preventDefault();
-            ox = e.touches[0].clientX;
-            startX = e.changedTouches[0].pageX;
-            startY = e.changedTouches[0].pageY;
+            startX = (e.changedTouches || e.originalEvent.changedTouches)[0].pageX;
+            startY = (e.changedTouches || e.originalEvent.changedTouches)[0].pageY;
             isTouch = true;
             startT = new Date();
         })
@@ -70,9 +69,8 @@ window.onload = function() {
 
         $(".perview_item").on("touchmove", (e) => {
             e.preventDefault();
-            ex = e.changedTouches[0].clientX;
-            moveX = e.changedTouches[0].pageX;
-            moveY = e.changedTouches[0].pageY;
+            moveX = (e.changedTouches || e.originalEvent.changedTouches).pageX;
+            moveY = (e.changedTouches || e.originalEvent.changedTouches).pageY;
             touchDirectionValue = touchDirection(startX, startY, moveX, moveY);
             let picture_index = showPictureIndex();
             let picture_X_local = perview_left_px;
@@ -106,8 +104,8 @@ window.onload = function() {
 
         $(".perview_item").on("touchend", (e) => {
             e.preventDefault();
-            endX = e.changedTouches[0].pageX;
-            endY = e.changedTouches[0].pageY;
+            endX = (e.changedTouches || e.originalEvent.changedTouches).pageX;
+            endY = (e.changedTouches || e.originalEvent.changedTouches).pageY;
             endT = new Date();
             // 模拟点击事件
             if (Math.abs(endX - startX) < 5 && Math.abs(endY - startY) < 5) {
@@ -147,7 +145,6 @@ window.onload = function() {
             }
             
             var angle = getAngle(angx, angy);
-            console.log("angle", angle);
             if (angle >= -135 && angle <= -45) {
                 result = 1; // 向上
             } else if (angle > 45 && angle < 135) {
@@ -179,17 +176,13 @@ window.onload = function() {
 
         // 判断图片上下滑的位置是否超过了图片本身的高度
         function tuochHeight(movex, pictureHeight) {
-            console.log("movex + win_preview_height", movex + win_preview_height, "pictureHeight", pictureHeight);
             // 超过了高度
             if (movex + win_preview_height >= pictureHeight) {
                 return true;
             } else {
                 return false;
             }
-        }
-
-        // 判断是不是图片
-        
+        }        
     }
     function getClientHeight() {
         var clientHeight = 0;
